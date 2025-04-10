@@ -17,9 +17,9 @@ const UserProfile = () => {
         </div>
         
         {/* Top Right Buttons */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-1">
           {/* Connect Wallet */}
-          <button className="flex items-center space-x-2 bg-pink-500 text-white px-3.5 py-1.5 rounded-lg shadow-md hover:bg-[#e14e53] transition">
+          <button className="flex items-center space-x-2 bg-pink-500 text-white px-1 py-1 rounded-lg shadow-md hover:bg-[#e14e53] transition">
             <FaWallet className="w-5 h-5" />
             <span className="text-sm font-medium">Connect Wallet</span>
           </button>
@@ -74,7 +74,7 @@ const UserProfile = () => {
       </motion.div>
 
       {/* Bio Section */}
-      <div className="bg-white/65 text-[#5c3a3a] text-lg font-light px-6 py-3 rounded-lg shadow-md mt-4 max-w-lg text-center">
+      <div className="bg-white/40 text-[#5c3a3a] text-lg font-light px-6 py-3 rounded-lg shadow-md mt-4 max-w-lg text-center">
         Passionate about NFTs, the future of digital art, and exploring new technologies. Advocate for blockchain innovation and adoption.
       </div>
 
