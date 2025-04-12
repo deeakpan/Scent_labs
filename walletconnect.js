@@ -18,7 +18,7 @@ export const config = getDefaultConfig({
   projectId: 'f2eaebf9638d95f99e0c87d2b3aa051d',
   chains: [baseSepoliaChain],
   initialChain: baseSepoliaChain,
-  ssr: false, // Required for proper client-side rendering
+  ssr: true, // Required for proper client-side rendering
 });
 
 export const WalletProvider = ({ children }) => {
