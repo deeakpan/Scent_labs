@@ -21,7 +21,7 @@ export default function Home() {
           </h1>
           <p className="text-base md:text-xl text-gray-700 mb-2 md:mb-6">Bridge the Gap Between Digital and Real-World Scents.</p>
           <p className="text-xs md:text-md text-gray-500 mb-2 md:mb-6 hidden md:block">
-            ScentLabs is a decentralized platform built on Starknet, bridging Web2 and Web3 scent creation. It's designed for creators, indie perfumers, and brands to craft, mint, and trade digital perfumes tied to real-world products.
+            ScentLabs is a decentralized platform built on Base Layer2, bridging Web2 and Web3 scent creation. It's designed for creators, indie perfumers, and brands to craft, mint, and trade digital perfumes tied to real-world products.
           </p>
           <p className="text-xs md:text-md text-gray-500 mb-2 md:mb-6 hidden md:block">Empowering creators with a seamless, blockchain-backed experience for ownership, royalties, and collaboration.</p>
           
@@ -58,7 +58,7 @@ export default function Home() {
           {[ 
             {
               title: "Connect Wallet & Choose Username",
-              description: "Start by connecting your wallet (Bravos or ArgentX) and choosing a username to begin your scent creation journey."
+              description: "Start by connecting your wallet Metamask,Coinbase,etc and choosing a username to begin your scent creation journey."
             },
             {
               title: "Create Your Digital Scent",
