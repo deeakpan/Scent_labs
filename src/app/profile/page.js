@@ -45,7 +45,7 @@ const UserProfile = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <img src="/pepu2.jpg" alt="Profile" className="w-full h-full object-cover" />
+          <img src="/Blank-Profile.png" alt="Profile" className="w-full h-full object-cover" />
         </motion.div>
 
         {/* Name & Verified Icon */}
