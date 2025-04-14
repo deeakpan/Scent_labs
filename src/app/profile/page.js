@@ -19,7 +19,7 @@ const UserProfile = () => {
         {/* Top Right Buttons */}
         <div className="flex items-center space-x-1">
           {/* Connect Wallet */}
-          <button className="flex items-center space-x-2 bg-pink-500 text-white px-1 py-1 rounded-lg shadow-md hover:bg-[#e14e53] transition">
+          <button className="flex items-center space-x-2 bg-pink-500 text-white px-2 border-2 border-black py-1 rounded-lg shadow-md hover:bg-[#e14e53] transition">
             <FaWallet className="w-5 h-5" />
             <span className="text-sm font-medium">Connect Wallet</span>
           </button>
