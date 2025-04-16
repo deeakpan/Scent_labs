@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
@@ -32,87 +32,117 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-[#f5f5dc] to-[#f2b6be] flex flex-col items-center p-0 md:p-12 space-y-4 md:space-y-16">
-      {/* Full-width Mobile Top Bar - Only visible on mobile */}
-      <div className="w-full bg-gradient-to-r from-pink-400 to-pink-600 p-3 flex items-center justify-between md:hidden fixed top-0 left-0 right-0 z-10 shadow-lg">
-        <div className="flex items-center">
+    <div className="min-h-screen bg-gradient-to-r from-[#f5f5dc] to-[#f2b6be] flex flex-col items-center p-0 md:p-12 space-y-4 md:space-y-16 relative">
+      {/* Mobile Navigation that scrolls with content */}
+      <div className="w-full flex justify-between items-center p-4 md:hidden">
+        <motion.div 
+          className="flex items-center"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <img 
             src="/undefined_image__5_-removebg-preview.png" 
             alt="ScentLabs Logo" 
-            className="h-8 w-auto mr-2"
+            className="h-10 w-auto mr-2 drop-shadow-md"
           />
-          <span className="text-white font-bold text-lg">ScentLabs</span>
-        </div>
-        <button 
+          <span className="text-gray-800 font-bold text-lg drop-shadow-sm">ScentLabs</span>
+        </motion.div>
+        <motion.button 
           onClick={toggleMenu} 
-          className="text-white p-2 rounded-full bg-pink-700/30 hover:bg-pink-700/50 focus:outline-none transition-all duration-300"
+          className="text-gray-800 p-2 rounded-full hover:bg-black/10 focus:outline-none transition-all duration-300 drop-shadow-md"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          whileTap={{ scale: 0.9 }}
         >
           {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
-        </button>
+        </motion.button>
       </div>
 
       {/* Centered Cream-colored Menu with Black Border - Only visible when toggled */}
-      {isMenuOpen && (
-        <motion.div 
-          className="fixed top-20 inset-x-0 z-20 md:hidden flex justify-center"
-          initial={{ opacity: 0, scale: 0.9, y: -20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: -20 }}
-          transition={{ duration: 0.2 }}
-        >
-          <div className="bg-[#f5f5dc] rounded-2xl shadow-xl border-2 border-black overflow-hidden w-4/5 max-w-sm">
-            <div className="p-2">
-              {[
-                { name: "Resources", icon: "📚" },
-                { name: "FAQ", icon: "❓" },
-                { name: "About", icon: "ℹ️" },
-                { name: "Contact", icon: "📧" }
-              ].map((item, index) => (
-                <a 
-                  key={index} 
-                  href="#" 
-                  className="flex items-center space-x-3 p-3 text-gray-800 hover:bg-[#f2e8c6] rounded-xl transition-all duration-200 my-1"
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            className="fixed top-20 inset-x-0 z-20 md:hidden flex justify-center"
+            initial={{ opacity: 0, scale: 0.9, y: -20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: -20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          >
+            <div className="bg-[#f5f5dc] rounded-2xl shadow-xl border-2 border-black overflow-hidden w-4/5 max-w-sm">
+              <div className="p-2">
+                {[
+                  { name: "Resources", icon: "📚" },
+                  { name: "FAQ", icon: "❓" },
+                  { name: "About", icon: "ℹ️" },
+                  { name: "Contact", icon: "📧" }
+                ].map((item, index) => (
+                  <motion.a 
+                    key={index} 
+                    href="#" 
+                    className="flex items-center space-x-3 p-3 text-gray-800 hover:bg-[#f2e8c6] rounded-xl transition-all duration-200 my-1"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ scale: 1.03, x: 5 }}
+                  >
+                    <span className="text-lg">{item.icon}</span>
+                    <span className="font-medium">{item.name}</span>
+                  </motion.a>
+                ))}
+              </div>
+              <div className="bg-gradient-to-r from-pink-500 to-pink-600 p-4 text-white text-center">
+                <motion.button 
+                  onClick={navigateToCollection}
+                  className="font-semibold text-base transition-all duration-300 hover:text-white/80"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <span className="text-lg">{item.icon}</span>
-                  <span className="font-medium">{item.name}</span>
-                </a>
-              ))}
+                  Launch App ✨
+                </motion.button>
+              </div>
             </div>
-            <div className="bg-gradient-to-r from-pink-500 to-pink-600 p-4 text-white text-center">
-              <button 
-                onClick={navigateToCollection}
-                className="font-semibold text-base transition-all duration-300 hover:text-white/80"
-              >
-                Launch App ✨
-              </button>
-            </div>
-          </div>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Dark Overlay when menu is open */}
-      {isMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-10 md:hidden"
-          onClick={toggleMenu}
-        ></div>
-      )}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-10 md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={toggleMenu}
+          ></motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Spacer for Mobile to account for fixed top bar */}
-      <div className="h-14 w-full md:hidden"></div>
-
-      {/* Hero Section */}
+      {/* Hero Section with aligned brand elements */}
       <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl gap-6 md:gap-8 px-4 md:px-0">
         {/* Text Content */}
         <div className="text-center md:text-left w-full md:w-3/5 lg:max-w-lg">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-3 md:mb-4 font-serif transform transition-all duration-500 hover:scale-110 hover:text-pink-600">
-            ScentLabs
-          </h1>
+          <div className="flex items-center justify-center md:justify-start mb-4">
+            <img 
+              src="/undefined_image__5_-removebg-preview.png" 
+              alt="ScentLabs Logo" 
+              className="hidden md:block h-16 w-auto mr-3"
+            />
+            <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 font-serif transform transition-all duration-500 hover:scale-110 hover:text-pink-600">
+              ScentLabs
+            </h1>
+          </div>
           <p className="text-lg md:text-xl text-gray-700 mb-4 md:mb-6">Bridge the Gap Between Digital and Real-World Scents.</p>
           <p className="text-sm md:text-md text-gray-600 mb-4 md:mb-6">
-            ScentLabs is a decentralized platform built on Base Layer2, bridging Web2 and Web3 scent creation. It's designed for creators, indie perfumers, and brands to craft, mint, and trade digital perfumes tied to real-world products.
+            A decentralized platform on Base Layer2 where creators, indie perfumers, and brands craft, mint, and trade digital perfumes tied to real-world products.
           </p>
-          <p className="text-sm md:text-md text-gray-600 mb-5 md:mb-6">Empowering creators with a seamless, blockchain-backed experience for ownership, royalties, and collaboration.</p>
+          <p className="text-sm md:text-md text-gray-600 mb-5 md:mb-6">Seamless blockchain-backed experience for ownership, royalties, and collaboration.</p>
           
           <button 
             onClick={navigateToCollection}

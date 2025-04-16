@@ -101,6 +101,7 @@ const UsernameModal = ({ isOpen, onClose, walletAddress }) => {
   const [baseName, setBaseName] = useState(null);
   const [useBaseName, setUseBaseName] = useState(false);
   const hasInitialized = useRef(false);
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
   
   useEffect(() => {
     const fetchData = async () => {
@@ -226,44 +227,58 @@ const UsernameModal = ({ isOpen, onClose, walletAddress }) => {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={onClose}>
       <div 
-        className="bg-[#f5f5dc] p-6 rounded-lg shadow-lg border-2 border-pink-500 w-full max-w-md relative"
+        className={`bg-[#f5f5dc] p-4 md:p-6 rounded-lg shadow-lg border-2 border-pink-500 w-full ${isMobile ? 'max-w-[90%] mx-4' : 'max-w-md'} relative`}
         onClick={handleModalClick}
       >
         <button 
           onClick={handleCloseButtonClick}
-          className="absolute top-4 right-4 text-gray-700 hover:text-pink-500"
+          className="absolute top-3 md:top-4 right-3 md:right-4 text-gray-700 hover:text-pink-500"
           aria-label="Close modal"
         >
-          <FaTimesCircle size={20} />
+          <FaTimesCircle size={isMobile ? 16 : 20} />
         </button>
         
-        <h2 className="text-2xl font-bold text-center mb-6">
+        <h2 className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold text-pink-500 text-center mb-4 md:mb-6`}>
           {existingData.username ? 'Update Your Username' : 'Create Username'}
         </h2>
         
         {isLoading ? (
-          <div className="flex justify-center py-8">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
+          <div className="flex justify-center py-6 md:py-8">
+            <div className="animate-spin rounded-full h-10 w-10 md:h-12 md:w-12 border-t-2 border-b-2 border-pink-500"></div>
           </div>
         ) : isSuccess ? (
-          <div className="text-center py-8">
+          <div className="text-center py-6 md:py-8">
             <div className="mb-4 flex justify-center">
               <div className="bg-green-100 p-3 rounded-full">
                 <FaCheck className="text-green-500 text-2xl" />
               </div>
             </div>
-            <p className="text-lg font-medium text-gray-800">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 260, 
+                damping: 20 
+              }}
+              className="py-3 px-4 bg-gradient-to-r from-pink-400 to-pink-600 rounded-lg shadow-lg mb-4"
+            >
+              <p className="text-lg md:text-xl font-bold text-white break-all overflow-hidden">
+                @{username}
+              </p>
+            </motion.div>
+            <p className={`${isMobile ? 'text-base' : 'text-lg'} font-medium text-gray-800`}>
               {existingData.username ? 'Username updated successfully!' : 'Username created successfully!'}
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
             {baseName && !existingData.hasBaseName && (
-              <div className="mb-6 bg-blue-50 p-4 rounded-lg border border-blue-200">
-                <p className="font-medium text-blue-700 mb-2">
+              <div className={`mb-4 md:mb-6 bg-blue-50 p-3 md:p-4 rounded-lg border border-blue-200 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                <p className="font-medium text-blue-700 mb-1 md:mb-2">
                   We found a .base.eth name for your wallet!
                 </p>
-                <p className="text-blue-600 mb-3">
+                <p className="text-blue-600 mb-2 md:mb-3">
                   Would you like to use <span className="font-bold">{baseName.replace('.base.eth', '')}</span> as your username?
                 </p>
                 <div className="flex items-center">
@@ -287,11 +302,11 @@ const UsernameModal = ({ isOpen, onClose, walletAddress }) => {
             )}
             
             {!baseName && !existingData.hasBaseName && (
-              <div className="mb-6 bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                <p className="font-medium text-yellow-700 mb-2">
+              <div className={`mb-4 md:mb-6 bg-yellow-50 p-3 md:p-4 rounded-lg border border-yellow-200 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                <p className="font-medium text-yellow-700 mb-1 md:mb-2">
                   No .base.eth name found for your wallet
                 </p>
-                <p className="text-yellow-600 mb-3">
+                <p className="text-yellow-600 mb-2 md:mb-3">
                   Would you like to create one? A .base.eth name gives you a unique on-chain identity across the Base ecosystem.
                 </p>
                 <button
@@ -299,19 +314,19 @@ const UsernameModal = ({ isOpen, onClose, walletAddress }) => {
                   onClick={goToBaseNameService}
                   className="flex items-center text-blue-600 hover:text-blue-800"
                 >
-                  Get a .base.eth name <FaExternalLinkAlt className="ml-1" size={12} />
+                  Get a .base.eth name <FaExternalLinkAlt className="ml-1" size={isMobile ? 10 : 12} />
                 </button>
               </div>
             )}
             
-            <div className="mb-6">
-              <label htmlFor="username" className="block text-gray-700 mb-2">
+            <div className="mb-4 md:mb-6">
+              <label htmlFor="username" className={`block text-black mb-1 md:mb-2 ${isMobile ? 'text-sm' : 'text-base'}`}>
                 Choose a username
               </label>
               <input
                 type="text"
                 id="username"
-                className={`w-full px-4 py-3 border-2 text-black ${error ? 'border-red-500' : 'border-pink-300'} rounded-lg focus:outline-none focus:border-pink-500`}
+                className={`w-full px-3 py-2 md:px-4 md:py-3 border-2 text-black ${error ? 'border-red-500' : 'border-pink-300'} rounded-lg focus:outline-none focus:border-pink-500 ${isMobile ? 'text-sm' : 'text-base'}`}
                 placeholder="Enter username"
                 value={username}
                 onChange={handleChange}
@@ -319,25 +334,25 @@ const UsernameModal = ({ isOpen, onClose, walletAddress }) => {
                 required
               />
               {error && (
-                <p className="text-red-500 text-sm mt-1">{error}</p>
+                <p className={`text-red-500 ${isMobile ? 'text-xs mt-1' : 'text-sm mt-1'}`}>{error}</p>
               )}
-              <p className="text-gray-500 text-sm mt-2">
+              <p className={`text-gray-500 ${isMobile ? 'text-xs mt-1' : 'text-sm mt-2'}`}>
                 Username must be at least 3 characters and can only contain letters, numbers, and underscores.
               </p>
             </div>
             
-            <div className="flex justify-end space-x-4">
+            <div className="flex justify-end space-x-2 md:space-x-4">
               <button
                 type="button"
                 onClick={handleCloseButtonClick}
-                className="px-6 py-2 border-2 border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100"
+                className={`px-3 py-1 md:px-6 md:py-2 border-2 border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 ${isMobile ? 'text-sm' : 'text-base'}`}
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={!!error || !username || isLoading}
-                className={`px-6 py-2 bg-pink-500 text-white rounded-lg ${
+                className={`px-3 py-1 md:px-6 md:py-2 bg-pink-500 text-white rounded-lg ${isMobile ? 'text-sm' : 'text-base'} ${
                   (!!error || !username || isLoading) 
                     ? 'opacity-50 cursor-not-allowed' 
                     : 'hover:bg-pink-600'
