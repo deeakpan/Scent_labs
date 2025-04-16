@@ -11,6 +11,7 @@
   "dependencies": {
     "@netlify/plugin-nextjs": "^5.10.4",
     "@rainbow-me/rainbowkit": "^2.2.4",
+    "@supabase/supabase-js": "^2.49.4",
     "@tanstack/react-query": "^5.72.2",
     "ethers": "^5.8.0",
     "framer-motion": "^12.6.3",
